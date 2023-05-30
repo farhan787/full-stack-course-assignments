@@ -1,109 +1,46 @@
+/**
+  You need to create a native HTTP server in Node.js which will handle the logic of a todo list app.
+  - Don't use any Node.js backend framework like Express.js, Backbone.js, etc. Use Node.js native libraries.
+  - Don't use any database, just store all the data in an array to store the todo list data (in-memory)
+
+  The expected API endpoints are defined below,
+  1.GET /todos - Retrieve all todo items
+    Description: Returns a list of all todo items.
+    Response: 200 OK with an array of todo items in JSON format.
+    Example: GET http://localhost:3000/todos
+    
+  2.GET /todos/:id - Retrieve a specific todo item by ID
+    Description: Returns a specific todo item identified by its ID.
+    Response: 200 OK with the todo item in JSON format if found, or 404 Not Found if not found.
+    Example: GET http://localhost:3000/todos/123
+    
+  3. POST /todos - Create a new todo item
+    Description: Creates a new todo item.
+    Request Body: JSON object representing the todo item.
+    Response: 201 Created with the ID of the created todo item in JSON format.
+    Example: POST http://localhost:3000/todos
+    Request Body: { "title": "Buy groceries", "completed": false }
+    
+  4. PUT /todos/:id - Update an existing todo item by ID
+    Description: Updates an existing todo item identified by its ID.
+    Request Body: JSON object representing the updated todo item.
+    Response: 200 OK if the todo item was found and updated, or 404 Not Found if not found.
+    Example: PUT http://localhost:3000/todos/123
+    Request Body: { "title": "Buy groceries", "completed": true }
+    
+  5. DELETE /todos/:id - Delete a todo item by ID
+    Description: Deletes a todo item identified by its ID.
+    Response: 200 OK if the todo item was found and deleted, or 404 Not Found if not found.
+    Example: DELETE http://localhost:3000/todos/123
+
+    - For any other route not defined in the server return 404
+
+  Testing the server - run `npm run test-todoServer` command in terminal
+ */
+
 const http = require('http');
-const { v4: uuidv4 } = require('uuid');
-const url = require('url');
+const PORT = 3000;
 
-let todos = [];
-
-const server = http.createServer((req, res) => {
-  const { pathname } = url.parse(req.url, true);
-  const method = req.method;
-
-  if (method === 'GET' && pathname === '/todos') {
-    handleGetAllTodos(res);
-  } else if (method === 'GET' && pathname.startsWith('/todos/')) {
-    const todoId = pathname.slice(7);
-    handleGetTodoById(res, todoId);
-  } else if (method === 'POST' && pathname === '/todos') {
-    handleCreateTodoItem(req, res);
-  } else if (method === 'PUT' && pathname.startsWith('/todos/')) {
-    const todoId = pathname.slice(7);
-    handleUpdateTodoItem(req, res, todoId);
-  } else if (method === 'DELETE' && pathname.startsWith('/todos/')) {
-    const todoId = pathname.slice(7);
-    handleDeleteTodoItem(res, todoId);
-  } else {
-    res.statusCode = 404;
-    res.end('Not Found');
-  }
-});
-
-function handleGetAllTodos(res) {
-  res.setHeader('Content-Type', 'application/json');
-  res.statusCode = 200;
-  res.end(JSON.stringify(todos));
-}
-
-function handleGetTodoById(res, todoId) {
-  const todo = todos.find((todo) => todo.id === todoId);
-
-  if (todo) {
-    res.setHeader('Content-Type', 'application/json');
-    res.statusCode = 200;
-    res.end(JSON.stringify(todo));
-  } else {
-    res.statusCode = 404;
-    res.end('TODO not found');
-  }
-}
-
-function handleCreateTodoItem(req, res) {
-  let body = '';
-
-  req.on('data', (chunk) => {
-    body += chunk;
-  });
-
-  req.on('end', () => {
-    const newTodo = JSON.parse(body);
-    const todoId = uuidv4();
-    newTodo.id = todoId;
-    todos.push(newTodo);
-
-    res.statusCode = 201;
-    res.end(JSON.stringify({ id: todoId }));
-  });
-}
-
-function handleUpdateTodoItem(req, res, todoId) {
-  let body = '';
-
-  req.on('data', (chunk) => {
-    body += chunk;
-  });
-
-  req.on('end', () => {
-    const updatedTodo = JSON.parse(body);
-    const todoIndex = todos.findIndex((todo) => todo.id === todoId);
-
-    if (todoIndex !== -1) {
-      todos[todoIndex] = { id: todoId, ...updatedTodo };
-
-      res.statusCode = 200;
-      res.end('TODO updated');
-    } else {
-      res.statusCode = 404;
-      res.end('TODO not found');
-    }
-  });
-}
-
-function handleDeleteTodoItem(res, todoId) {
-  const todoIndex = todos.findIndex((todo) => todo.id === todoId);
-
-  if (todoIndex !== -1) {
-    todos.splice(todoIndex, 1);
-
-    res.statusCode = 200;
-    res.end('TODO deleted');
-  } else {
-    res.statusCode = 404;
-    res.end('TODO not found');
-  }
-}
-
-const port = 3000;
-server.listen(port, () => {
-  console.log(`Server is listening on port ${port}`);
-});
+const server = http.createServer((req, res) => {});
 
 module.exports = server;

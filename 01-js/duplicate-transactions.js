@@ -1,34 +1,14 @@
+/*
+  Implement a function `findDuplicateTransactions` which takes a list of transactions and returns a list of duplicate transactoins.
+  Transaction is an object like { itemName, category, price, timestamp } and two transactions are duplicate if they have every field same except timestamp,
+  if the timestamps have a differece of <= 60 seconds then the transactions are duplicate.
+
+  Once you've implemented the logic, test your code by running
+  - `npm run test-duplicate-transactions`
+*/
+
 function findDuplicateTransactions(transactions) {
-  const duplicates = [];
-
-  for (let i = 0; i < transactions.length - 1; i++) {
-    const transactionA = transactions[i];
-
-    for (let j = i + 1; j < transactions.length; j++) {
-      const transactionB = transactions[j];
-
-      if (areTransactionsDuplicate(transactionA, transactionB)) {
-        duplicates.push(transactionB);
-      }
-    }
-  }
-
-  return duplicates;
-}
-
-function areTransactionsDuplicate(transactionA, transactionB) {
-  const fieldsToCompare = ['price', 'category', 'itemName'];
-  for (const field of fieldsToCompare) {
-    if (transactionA[field] !== transactionB[field]) {
-      return false;
-    }
-  }
-
-  const timeDifference = Math.abs(
-    transactionA.timestamp - transactionB.timestamp
-  );
-
-  return timeDifference <= 60000;
+  return [];
 }
 
 module.exports = findDuplicateTransactions;

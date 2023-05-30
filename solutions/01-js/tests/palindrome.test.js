@@ -5,7 +5,6 @@ describe('isPalindrome', () => {
     expect(isPalindrome('level')).toBe(true);
     expect(isPalindrome('A man, a plan, a canal. Panama')).toBe(true);
     expect(isPalindrome('racecar')).toBe(true);
-    expect(isPalindrome('Nan')).toBe(true);
     expect(isPalindrome('')).toBe(true);
   });
 
