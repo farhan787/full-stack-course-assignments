@@ -1,0 +1,25 @@
+{
+  "name": "03-async",
+  "version": "1.0.0",
+  "description": "",
+  "main": "calculateSum.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test-fetchApiData": "./node_modules/jest/bin/jest.js ./tests/fetchApiData.test.js",
+    "test-fetchSimultaneously": "./node_modules/jest/bin/jest.js ./tests/fetchSimultaneously.test.js",
+    "test-getAllResponses": "./node_modules/jest/bin/jest.js ./tests/getAllResponses.test.js",
+    "test-github": "./node_modules/jest/bin/jest.js ./tests/github.test.js",
+    "test-processNums": "./node_modules/jest/bin/jest.js ./tests/processNums.test.js",
+    "test-responseRace": "./node_modules/jest/bin/jest.js ./tests/responseRace.test.js",
+    "test-all": "./node_modules/jest/bin/jest.js ./tests/"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^29.5.0"
+  }
+}
